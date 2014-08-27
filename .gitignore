@@ -1,12 +1,3 @@
-doxy*
-
-*.opensdf
-
-Debug*
-
-Release*
-
-
 # Compiled Object files
 *.slo
 *.lo
