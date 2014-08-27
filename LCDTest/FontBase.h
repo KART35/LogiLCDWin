@@ -13,6 +13,10 @@ class FontBase : public Draw
 
 public:
 	FontBase();
+	FontBase(Canvas* can)
+	{
+		this->canvas = can;
+	}
 	//! determine what vector to use for a given char
 	std::vector<Point> getCharVectorGraphic(char); 
 

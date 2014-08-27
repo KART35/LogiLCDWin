@@ -19,3 +19,9 @@
 *.exe
 *.out
 *.app
+
+# environment specific things
+doxy*
+*.opensdf
+Debug*
+Release*

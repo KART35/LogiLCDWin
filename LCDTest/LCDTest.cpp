@@ -102,9 +102,27 @@ int _tmain(int argc, _TCHAR* argv[])
 			lcd.SetImg();
 		}
 		*/
-		uiCore.plot(make_pair(0, 0), col);
-		uiCore.circle(center, 110, col);
-		uiCore.drawString(std::string("ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz !?./\\|,-=_+'\":; 0123456789"), col, make_pair(0, 12));
+		//uiCore.plot(make_pair(0, 0), col);
+		//uiCore.circle(center, 110, col);
+
+		uiCore.drawString(std::string("This is on the primary canvas."), col, make_pair(0, 12));
+		Canvas can(200, 100);
+		FontBase fonts(&can);
+		col.g = 0;
+		col.r = 0;
+		
+		
+		
+		fonts.circle(make_pair(30, 30), 30, col);
+		//fonts.drawString(std::string("this is on a second canvas"), col, make_pair(0, 20));
+		for (int i = 0; i != 10; i++)
+		{
+			//fonts.line(make_pair(0, 0), make_pair(i, 19), col);
+		}
+		uiCore.drawSubCanvas(&can, make_pair(30, 30), can.getSize());
+		col.g = 255;
+		col.r = 255;
+
 		lcd.setCanvas(uiCore.getCanvas());
 		lcd.SetImg();
 		if (LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_OK))

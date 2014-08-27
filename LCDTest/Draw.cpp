@@ -18,16 +18,16 @@ bool Draw::plot(Point p, Color c)
 	
 	//bounds checking
 	if (
-		(p.first < 0) || (p.first > this->canvas.getWidth() - 1) ||
-		(p.second < 0) || (p.second > this->canvas.getHeight())
+		(p.first < 0) || (p.first > this->canvas->getWidth() - 1) ||
+		(p.second < 0) || (p.second > this->canvas->getHeight())
 		)
 	{
 		return false;
 	}
-	this->canvas.page[(this->canvas.getWidth() * (int)p.second) + (int)p.first].r = c.r;
-	this->canvas.page[(this->canvas.getWidth() * (int)p.second) + (int)p.first].g = c.g;
-	this->canvas.page[(this->canvas.getWidth() * (int)p.second) + (int)p.first].b = c.b;
-	this->canvas.page[(this->canvas.getWidth() * (int)p.second) + (int)p.first].a = c.a;
+	this->canvas->page[(this->canvas->getWidth() * (int)p.second) + (int)p.first].r = c.r;
+	this->canvas->page[(this->canvas->getWidth() * (int)p.second) + (int)p.first].g = c.g;
+	this->canvas->page[(this->canvas->getWidth() * (int)p.second) + (int)p.first].b = c.b;
+	this->canvas->page[(this->canvas->getWidth() * (int)p.second) + (int)p.first].a = c.a;
 	return true;
 }
 
@@ -40,10 +40,10 @@ bool Draw::line(Point start, Point end, Color col)
 	// if either are false, return without
 	// plotting anything.
 	if (
-		(start.first < 0)  || (start.first > this->canvas.getWidth() - 1) ||
-		(start.second < 0) || (start.second > this->canvas.getHeight()) ||
-		(end.first < 0)    || (end.first > this->canvas.getWidth() - 1) ||
-		(end.second < 0)   || (end.second > this->canvas.getHeight())
+		(start.first < 0)  || (start.first > this->canvas->getWidth() - 1) ||
+		(start.second < 0) || (start.second > this->canvas->getHeight()) ||
+		(end.first < 0)    || (end.first > this->canvas->getWidth() - 1) ||
+		(end.second < 0)   || (end.second > this->canvas->getHeight())
 		)
 	{
 		return false;

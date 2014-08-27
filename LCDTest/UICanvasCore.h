@@ -27,6 +27,6 @@ public:
 	{
 		//this->fonts = new FontBase();
 	}
-	bool drawSubCanvas(Canvas* , pair<unsigned int, unsigned int>, pair<unsigned int, unsigned int> ); //!< draw a sub canvas onto the main canvas
+	bool drawSubCanvas(Canvas* , pair<unsigned int, unsigned int> location, pair<unsigned int, unsigned int> size); //!< draw a sub canvas onto the main canvas
 };
 
