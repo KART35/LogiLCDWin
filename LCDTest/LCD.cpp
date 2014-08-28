@@ -42,14 +42,24 @@ void LogiLCD::SetImg()
 {
 	
 	unsigned int pixels = this->canvas->getHeight() * this->canvas->getWidth();
-	for (int i = 0; i != pixels; i++)
+	int i = 0;
+	for (; i != pixels; i++)
 	{
 		this->page[i][pix::b] = this->canvas->page[i].b;
 		this->page[i][pix::g] = this->canvas->page[i].g;
 		this->page[i][pix::r] = this->canvas->page[i].r;
 		this->page[i][pix::a] = this->canvas->page[i].a;
 	}
-
+	if (i < (LogiLCD::img_height * LogiLCD::img_width))
+	{
+		for (; i != LogiLCD::img_height * LogiLCD::img_width; i++)
+		{
+			this->page[i][pix::b] = 128;
+			this->page[i][pix::g] = 0;
+			this->page[i][pix::r] = 128;
+			this->page[i][pix::a] = 255;
+		}
+	}
 	BYTE* page = reinterpret_cast<BYTE*>(this->page);
 	LogiLcdColorSetBackground(page);
 	LogiLcdUpdate();

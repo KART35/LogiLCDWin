@@ -18,11 +18,14 @@ bool UICanvasCore::drawSubCanvas(Canvas* sCanvas, pair<unsigned int, unsigned in
 	for (int j = 0; j < (size.first * size.second); j++)
 	{
 		srcLine = j / size.first;
-		unsigned int offset = (((srcLine+location.second) * (this->canvas->getWidth()))
-			+(i)+location.second);
-// this->canvas->getWidth();// (line*this->canvas->getWidth()) + startCorner+20;
+		unsigned int offset, xRel, yRel = 0;
+		yRel = srcLine;
+		xRel = j - (yRel*size.first);
+
+		offset = (xRel + (yRel*this->canvas->getWidth()));
+
 		if (i >= size.first) i = 0;
-		if (true)
+		if (sCanvas->page[j].a != 0)
 		{
 			this->canvas->page[offset].r = sCanvas->page[j].r;
 			this->canvas->page[offset].g = sCanvas->page[j].g;
@@ -31,10 +34,21 @@ bool UICanvasCore::drawSubCanvas(Canvas* sCanvas, pair<unsigned int, unsigned in
 		}
 		else
 		{
-			this->canvas->page[offset].r = 255;//iter->r;
-			this->canvas->page[offset].g = 0;
-			this->canvas->page[offset].b = 0;
-			this->canvas->page[offset].a = 255;// sCanvas->page[j].a;
+			if (this->canvas->page[offset].a == 0)
+			{
+				this->canvas->page[offset].r = 127;
+				this->canvas->page[offset].g = 0;
+				this->canvas->page[offset].b = 127;
+				this->canvas->page[offset].a = 255;
+			}
+			else //basic transparancy handling
+			{
+				//this->canvas->page[offset].b = (this->canvas->page[offset].b * this->canvas->page[offset].a) +
+				//	(sCanvas->page[j].a * sCanvas->page[j].b * (1 - this->canvas->page[offset].a));
+				//this->canvas->page[offset].a = 255;
+
+				this->canvas->page[offset] = blendPixel(sCanvas->page[j], this->canvas->page[offset]);
+			}
 		}
 		i++;
 	}

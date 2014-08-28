@@ -33,7 +33,7 @@ public:
 		return height;
 	}
 
-	Canvas( unsigned int height = 240, unsigned int width = 320, unsigned int posX = 0, unsigned int posY = 0) :
+	Canvas(unsigned int width = 320, unsigned int height = 240, unsigned int posX = 0, unsigned int posY = 0) :
 		page(height*width)
 	{
 		
