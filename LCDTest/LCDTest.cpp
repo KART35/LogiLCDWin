@@ -15,7 +15,9 @@
 
 using namespace std;
 
-int _tmain(int argc, _TCHAR* argv[])
+//int _tmain(int argc, _TCHAR* argv[])
+
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
 	LogiLCD lcd;
 	
@@ -23,7 +25,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	
 	UICanvasCore uiCore;
 	Color col;
-	Canvas can(150, 200);
+	Canvas can(150, 40);
 	FontBase fonts(&can);
 	while (
 		LogiLcdIsConnected(LOGI_LCD_TYPE_COLOR) && 
@@ -110,21 +112,27 @@ int _tmain(int argc, _TCHAR* argv[])
 		//uiCore.plot(make_pair(0, 0), col);
 		//uiCore.circle(center, 110, col);
 
-		uiCore.drawString(std::string("This is on the primary canvas."), col, make_pair(0, 12));
-		
+		uiCore.drawString(std::string("This is on the primary canvas."), col, make_pair(3, 15));
+		uiCore.drawCanvasBorder(col);
 		col.g = 0;
 		col.r = 0;
-		col.a = 128;
+		col.a = 255;
 		
 		
-		fonts.circle(make_pair(100, 50), 30, col);
-		fonts.line(make_pair(1, 1), make_pair(149, 199), col);
-		fonts.line(make_pair(1, 199), make_pair(149, 1), col);
-		for (int i = 0; i != 10; i++)
-		{
-			fonts.line(make_pair(0, 0), make_pair(i, 19), col);
-		}
-		uiCore.drawSubCanvas(&can, make_pair(30, 30), can.getSize());
+		//fonts.circle(make_pair(100, 50), 30, col);
+		//fonts.line(make_pair(1, 1), make_pair(149, 199), col);
+		//fonts.line(make_pair(1, 199), make_pair(149, 1), col);
+		fonts.drawCanvasBorder(col);
+		fonts.drawString("Item", col, make_pair(30, 20));
+		//for (int i = 0; i != 10; i++)
+		//{
+		//	fonts.line(make_pair(0, 0), make_pair(i, 19), col);
+		//}
+		
+		uiCore.drawSubCanvas(&can, make_pair(5, 20), can.getSize());
+		uiCore.drawSubCanvas(&can, make_pair(5, 65), can.getSize());
+		uiCore.drawSubCanvas(&can, make_pair(5, 110), can.getSize());
+		uiCore.drawSubCanvas(&can, make_pair(5, 155), can.getSize());
 		col.g = 255;
 		col.r = 255;
 

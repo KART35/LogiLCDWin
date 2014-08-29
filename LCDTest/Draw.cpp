@@ -188,6 +188,17 @@ bool Draw::circle(Point pt, int radius, Color col)
 	return true;
 }
 
+void Draw::drawCanvasBorder(Color col)
+{
+	unsigned int h = this->canvas->getHeight();
+	unsigned int w = this->canvas->getWidth();
+
+	line(make_pair(0, 0), make_pair(0, h - 1), col);
+	line(make_pair(0, 0), make_pair(w - 1, 0), col);
+	line(make_pair(0, h - 1), make_pair(w - 1, h - 1), col);
+	line(make_pair(w - 1, 0), make_pair(w - 1, h - 1), col);
+}
+
 void Draw::fillNgon(Point, vector<Point>, Color)
 {
 

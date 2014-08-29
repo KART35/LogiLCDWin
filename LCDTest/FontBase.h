@@ -12,10 +12,14 @@ class FontBase : public Draw
 
 
 public:
-	FontBase();
+	FontBase()
+	{
+		this->init();
+	}
 	FontBase(Canvas* can)
 	{
 		this->canvas = can;
+		this->init();
 	}
 	//! determine what vector to use for a given char
 	std::vector<Point> getCharVectorGraphic(char); 
@@ -25,5 +29,10 @@ public:
 
 	//! draw an entire string of characters.
 	void drawString(std::string, Color, Point);
+
+	
+
+	//! initialize the font library
+	void init(); 
 };
 

@@ -27,6 +27,9 @@ public:
 	void fillNgon(Point, vector<Point>, Color); //!< fill a polygon with solid color 
 	bool plot(Point, Color); //!< point; RGBA; 0-255
 	bool line(Point start, Point end, Color); //!< draw a line from Point start to Point end
+
+	//! draw a border around the edge of the canvas.
+	void drawCanvasBorder(Color);
 	Canvas * getCanvas() //!< get a pointer to the main canvas
 	{
 		return this->canvas;

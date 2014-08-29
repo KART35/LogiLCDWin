@@ -1,9 +1,7 @@
 #include "FontBase.h"
 #include "vectorFont.h"
-FontBase::FontBase()
+void FontBase::init()
 {
-	//this->drw = draw;
-
 	this->charMap.insert(make_pair('A', mono::A));
 	this->charMap.insert(make_pair('B', mono::B));
 	this->charMap.insert(make_pair('C', mono::C));
@@ -119,12 +117,22 @@ void FontBase::drawString(std::string str, Color col, Point p)
 	int xOrig =(int) p.first;
 	for (iter = str.begin(); iter != str.end(); iter++)
 	{
-		this->drawCharacter(*iter, col, p);
-		p.first += 10;
-		if (p.first > LogiLCD::img_width - 10) // word wrap.. kinda
+		if (*iter == '\n')
 		{
-			p.first =(float) xOrig;
 			p.second += 19;
+			p.first = (float)xOrig;
+		} 
+		else
+		{
+			
+			if (p.first > (this->canvas->getWidth() - 10)) // word wrap.. kinda
+			{
+				p.first = (float)xOrig;
+				p.second += 19;
+				if (*iter == ' ') iter++;
+			}
+			this->drawCharacter(*iter, col, p);
+			p.first += 10;
 		}
 	}
 }
