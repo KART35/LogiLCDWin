@@ -1,5 +1,9 @@
 // LCDTest.cpp : Defines the entry point for the console application.
 //
+
+
+#include <stdlib.h>
+#include <crtdbg.h>
 #include "LCD.h"
 #include "Draw.h"
 #include "FontBase.h"
@@ -8,18 +12,19 @@
 #include "UICanvasCore.h"
 #include <Windows.h>
 #include <math.h>
+
 using namespace std;
 
-//TODO: screenshot. on press of OK button, save to PNG in working dir.
 int _tmain(int argc, _TCHAR* argv[])
 {
 	LogiLCD lcd;
 	
 	PNGHandler png(&lcd);
-	//Draw draw;
 	
 	UICanvasCore uiCore;
 	Color col;
+	Canvas can(150, 200);
+	FontBase fonts(&can);
 	while (
 		LogiLcdIsConnected(LOGI_LCD_TYPE_COLOR) && 
 		(!LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_CANCEL))
@@ -106,33 +111,31 @@ int _tmain(int argc, _TCHAR* argv[])
 		//uiCore.circle(center, 110, col);
 
 		uiCore.drawString(std::string("This is on the primary canvas."), col, make_pair(0, 12));
-		Canvas can(200, 150);
-		FontBase fonts(&can);
+		
 		col.g = 0;
 		col.r = 0;
 		col.a = 128;
 		
 		
 		fonts.circle(make_pair(100, 50), 30, col);
-		fonts.line(make_pair(1, 1), make_pair(199, 99), col);
-		fonts.line(make_pair(1, 99), make_pair(199, 1), col);
-		//fonts.drawString(std::string("this is on a second canvas"), col, make_pair(0, 20));
+		fonts.line(make_pair(1, 1), make_pair(149, 199), col);
+		fonts.line(make_pair(1, 199), make_pair(149, 1), col);
 		for (int i = 0; i != 10; i++)
 		{
-			//fonts.line(make_pair(0, 0), make_pair(i, 19), col);
+			fonts.line(make_pair(0, 0), make_pair(i, 19), col);
 		}
 		uiCore.drawSubCanvas(&can, make_pair(30, 30), can.getSize());
 		col.g = 255;
 		col.r = 255;
 
 		lcd.setCanvas(uiCore.getCanvas());
-		//lcd.setCanvas(&can);
 		lcd.SetImg();
 		if (LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_OK))
 		{
 			png.saveImage("test.png");
 		}
 	}
+
 	return 0;
 }
 

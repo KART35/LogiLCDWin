@@ -63,6 +63,8 @@ void LogiLCD::SetImg()
 	BYTE* page = reinterpret_cast<BYTE*>(this->page);
 	LogiLcdColorSetBackground(page);
 	LogiLcdUpdate();
+	page = NULL;
+	delete[] page;
 }
 uint8_t LogiLCD::getHeight()
 {
