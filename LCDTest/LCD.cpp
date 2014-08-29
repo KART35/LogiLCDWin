@@ -61,7 +61,7 @@ void LogiLCD::SetImg() //leak somewhere in here...
 		}
 	}
 	this->bPage = reinterpret_cast<BYTE*>(this->page);
-	if(LogiLcdColorSetBackground(this->bPage)==false) cout << "bgSet ret false"<<endl;
+	if(LogiLcdColorSetBackground(this->bPage)==false) cout << "bgSet ret false"<<endl; // yep, right here.
 	LogiLcdUpdate();
 }
 uint8_t LogiLCD::getHeight()
