@@ -20,7 +20,7 @@ class Canvas;
 class LogiLCD
 {
 	wchar_t *initMsg = L"LCDTest"; //!< LCD app name
-
+	BYTE* bPage; //!< pointer to pixel array that the logitech libs can read.
 	//! Note the exit status of LogiLCD::LogiLCD
 	enum {
 		init_err_not_conn = -3, //!< couldn't find device

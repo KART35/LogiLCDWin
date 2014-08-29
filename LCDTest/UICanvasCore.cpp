@@ -16,7 +16,7 @@ bool UICanvasCore::drawSubCanvas(Canvas* sCanvas, pair<unsigned int, unsigned in
 			y++;
 			x = 0;
 		}
-		offset = x + y*this->canvas->getWidth();
+		offset = x + y * this->canvas->getWidth();
 
 		if (sCanvas->page[j].a != 0)
 		{
@@ -27,12 +27,12 @@ bool UICanvasCore::drawSubCanvas(Canvas* sCanvas, pair<unsigned int, unsigned in
 		}
 		else
 		{
-			if (this->canvas->page[offset].a == 0)
+			if (this->canvas->page[offset].a == 0) //if we want to do something to the empty areas..
 			{
-				this->canvas->page[offset].r = 0;
-				this->canvas->page[offset].g = 50;
-				this->canvas->page[offset].b = 0;
-				this->canvas->page[offset].a = 255;
+				//this->canvas->page[offset].r = 0;
+				//this->canvas->page[offset].g = 50;
+				//this->canvas->page[offset].b = 0;
+				//this->canvas->page[offset].a = 255;
 			}
 			else //basic transparancy handling
 			{

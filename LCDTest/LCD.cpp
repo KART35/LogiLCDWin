@@ -38,9 +38,9 @@ void LogiLCD::showTestImage()
 }
 
 //! Display a background image
-void LogiLCD::SetImg()
+void LogiLCD::SetImg() //leak somewhere in here...
 {
-	
+	if (this->canvas == NULL) return;
 	unsigned int pixels = this->canvas->getHeight() * this->canvas->getWidth();
 	int i = 0;
 	for (; i != pixels; i++)
@@ -60,11 +60,9 @@ void LogiLCD::SetImg()
 			this->page[i][pix::a] = 255;
 		}
 	}
-	BYTE* page = reinterpret_cast<BYTE*>(this->page);
-	LogiLcdColorSetBackground(page);
+	this->bPage = reinterpret_cast<BYTE*>(this->page);
+	if(LogiLcdColorSetBackground(this->bPage)==false) cout << "bgSet ret false"<<endl;
 	LogiLcdUpdate();
-	page = NULL;
-	delete[] page;
 }
 uint8_t LogiLCD::getHeight()
 {

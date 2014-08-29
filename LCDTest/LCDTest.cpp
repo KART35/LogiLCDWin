@@ -128,7 +128,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		col.g = 255;
 		col.r = 255;
 
-		lcd.setCanvas(uiCore.getCanvas());
+		lcd.setCanvas(uiCore.getCanvas()); //leaky...
 		lcd.SetImg();
 		if (LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_OK))
 		{
