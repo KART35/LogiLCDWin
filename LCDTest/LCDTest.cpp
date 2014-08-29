@@ -15,8 +15,6 @@
 
 using namespace std;
 
-//int _tmain(int argc, _TCHAR* argv[])
-
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow)
 {
 	LogiLCD lcd;
