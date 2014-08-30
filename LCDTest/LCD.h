@@ -19,6 +19,7 @@ using namespace std;
 class Canvas;
 class LogiLCD
 {
+	long unsigned int refreshCnt = 0;
 	wchar_t *initMsg = L"LCDTest"; //!< LCD app name
 	BYTE* bPage; //!< pointer to pixel array that the logitech libs can read.
 	//! Note the exit status of LogiLCD::LogiLCD
@@ -47,11 +48,22 @@ public:
 	void setCanvas(Canvas* can)
 	{
 		this->canvas = can;
+		if ((this->refreshCnt % 100000) == 0)
+		{
+			this->restart();
+			FILE* fp = NULL;
+			fopen_s(&fp, "err.txt", "w");
+			fputs("restarted LCD srv", fp);
+			fclose(fp);
+			this->refreshCnt = 0;
+		}
 	}
 	LogiLCD();
 	void SetImg();
 	void showTestImage();
+	void restart();
 	uint8_t getHeight();
 	uint8_t getWidth();
+	void init();
 
 };

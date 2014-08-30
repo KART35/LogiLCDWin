@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <utility>
 #include <vector>
+#include "common.h"
 
 class Canvas 
 {
@@ -14,14 +15,20 @@ class Canvas
 		posY = 0;
 	
 public:
-	struct pix
+	std::vector<Color> page;
+
+	void setSize(std::pair<unsigned int, unsigned int> size)
 	{
-		uint8_t r = 0;
-		uint8_t g = 0;
-		uint8_t b = 0;
-		uint8_t a = 0;
-	};
-	std::vector<pix> page;
+		this->height = size.second;
+		this->width = size.first;
+		this->page.resize(this->height * this->width);
+	}
+
+	void setPosition(std::pair<unsigned int, unsigned int> position)
+	{
+		this->posX = position.first;
+		this->posX = position.second;
+	}
 
 	int getWidth()
 	{
@@ -36,7 +43,6 @@ public:
 	Canvas(unsigned int width = 320, unsigned int height = 240, unsigned int posX = 0, unsigned int posY = 0) :
 		page(height*width)
 	{
-		
 		this->height = height;
 		this->width = width;
 		this->posX = posX;
@@ -53,11 +59,20 @@ public:
 		return std::make_pair(this->height, this->width);
 	}
 	
-	std::vector<pix> *getCanvas()
+	std::vector<Color> *getCanvas()
 	{
 		return &this->page;
 	}
 
+	unsigned int getOffset(Point location)
+	{
+		return (this->getWidth() * location.second) + location.first;
+	}
+	
+	Color getPixel(Point location)
+	{
+		return this->page[getOffset(location)];
+	}
 	
 };
 

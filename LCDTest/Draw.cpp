@@ -1,5 +1,6 @@
 #include "Draw.h"
 #include "LCD.h"
+#include "common.h"
 /*
 DrawCore::DrawCore(Canvas * lcd)
 {
@@ -19,7 +20,7 @@ bool Draw::plot(Point p, Color c)
 	//bounds checking
 	if (
 		(p.first < 0) || (p.first > this->canvas->getWidth() - 1) ||
-		(p.second < 0) || (p.second > this->canvas->getHeight())
+		(p.second < 0) || (p.second > this->canvas->getHeight()-1)
 		)
 	{
 		return false;
@@ -199,7 +200,102 @@ void Draw::drawCanvasBorder(Color col)
 	line(make_pair(w - 1, 0), make_pair(w - 1, h - 1), col);
 }
 
-void Draw::fillNgon(Point, vector<Point>, Color)
+void Draw::floodFill (Point location, Color oldCol, Color newCol)
 {
+	Color exist = this->canvas->getPixel(location);
+	if (newCol == exist) return;
+	std::queue<Point> Q;
+	Q.push(location);
+	Point newLoc;
+	while (Q.size() != 0)
+	{
+		Point n = Q.front();
+		Q.pop();
+		if (isValidCoord(n)) exist = this->canvas->getPixel(n);
+		if (exist == oldCol)
+		{
+			this->plot(n, newCol);
+			
+
+				newLoc = make_pair(n.first - 1, n.second);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+			
+				newLoc = make_pair(n.first + 1, n.second);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+
+				newLoc = make_pair(n.first, n.second + 1);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+
+				newLoc = make_pair(n.first, n.second - 1);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+
+				newLoc = make_pair(n.first + 1, n.second + 1);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+
+				newLoc = make_pair(n.first + 1, n.second - 1);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+
+				newLoc = make_pair(n.first - 1, n.second - 1);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+
+				newLoc = make_pair(n.first - 1, n.second + 1);
+				if (isValidCoord(newLoc))
+				{
+					exist = this->canvas->getPixel(newLoc);
+					if (newCol != exist)
+						Q.push(newLoc);
+				}
+
+				try
+				{
+				}
+			catch (std::exception &e)
+			{
+				FILE*fp = NULL;
+				fopen_s(&fp, "err.txt", "w");
+				fputs(e.what(), fp);
+				fclose(fp);
+				abort();
+			}
+		}
+	}
 
 }
+
+
+

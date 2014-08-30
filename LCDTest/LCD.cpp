@@ -2,7 +2,15 @@
 #include <Windows.h>
 #define PI (3.141592653589793)
 
+
+
 LogiLCD::LogiLCD()
+{
+	this->init();
+}
+
+
+void LogiLCD::init()
 {
 	if (!LogiLcdInit(initMsg, LOGI_LCD_TYPE_COLOR))
 	{
@@ -40,7 +48,9 @@ void LogiLCD::showTestImage()
 //! Display a background image
 void LogiLCD::SetImg() //leak somewhere in here...
 {
+
 	if (this->canvas == NULL) return;
+	this->refreshCnt++;
 	unsigned int pixels = this->canvas->getHeight() * this->canvas->getWidth();
 	int i = 0;
 	for (; i != pixels; i++)
@@ -64,11 +74,21 @@ void LogiLCD::SetImg() //leak somewhere in here...
 	if(LogiLcdColorSetBackground(this->bPage)==false) cout << "bgSet ret false"<<endl; // yep, right here.
 	LogiLcdUpdate();
 }
+
 uint8_t LogiLCD::getHeight()
 {
 	return img_height;
 }
+
 uint8_t LogiLCD::getWidth()
 {
 	return img_width;
+}
+
+
+//! restart the lcd server. will hopefuly release that leaking memory.
+void LogiLCD::restart()
+{
+	LogiLcdShutdown();
+	init();
 }

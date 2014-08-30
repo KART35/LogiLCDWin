@@ -12,6 +12,8 @@
 #include "UICanvasCore.h"
 #include <Windows.h>
 #include <math.h>
+#include <stdexcept>
+#include "menuContainer.h"
 
 using namespace std;
 
@@ -23,116 +25,43 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	
 	UICanvasCore uiCore;
 	Color col;
+	Color replaced;
+	Color replacement;
+	col.a = 255;
 	Canvas can(150, 40);
 	FontBase fonts(&can);
+	menuContainer cont;
+	cont.setSize(make_pair(300, 200));
+	cont.addEntry("one");
+	cont.addEntry("two");
+	cont.addEntry("three");
 	while (
 		LogiLcdIsConnected(LOGI_LCD_TYPE_COLOR) && 
 		(!LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_CANCEL))
 		)
 	{
-		//lcd.showTestImage();
-		//for (int i = 0; i < (320*240); i++)
-		//{
-		//	lcd.page[i][0] = 0;
-		//	lcd.page[i][1] = 0;
-		//}
-		
-		Point a(0, 0);
-		Point b(140, 150);
-		Point c(100, 100);
-		Point d(0, 200);
-		Point e(30, 100);
-		Point center(160, 120);
 
-		vector<Point> ser;
-		ser.push_back(a);
-		ser.push_back(b);
-		ser.push_back(c);
-		ser.push_back(d);
-		ser.push_back(e);
-		ser.push_back(center);
-		//drw.nLine(ser, col);
-
-		//col.b = 255;
-		//col.r = 255;
-		//col.g = 255;
-		//drw.line(a, e, col);
-		//drw.line(a, c, col);
-		//col.b = 0;
-		//col.g = 0;
-		//drw.line(e, b, col);
-		//drw.line(b, d, col);
-		//col.r = 0;
-		//col.b = 255;
-		//drw.line(e, c, col);
-		//drw.line(c, b, col);//m=7.5, down to right; up to right on normal graph
-		//col.b = 0;
-		//col.g = 255;
-		//drw.line(d, e, col);//m=-4.33333349, up to right; down to right on normal graph
-		//drw.line(d, a, col);
-		/*
+		col.g = 255;
 		col.r = 255;
 		col.b = 255;
-		col.g = 255;
-		for (int i = 0; i < lcd.img_width; i += 1)
-		{
-			drw.line(center, Draw::Point(i, 239), col);
-			lcd.SetImg();
-		}
-		col.r = 255;
-		col.b = 0;
-		col.g = 0;
-
-		for (int i = 0; i < lcd.img_height; i += 1)
-		{
-			
-			drw.line(center, Draw::Point(319, i), col);
-			lcd.SetImg();
-		}
-		col.r = 0;
-		col.b = 255;
-		col.g = 0;
-		for (int i = 0; i < lcd.img_width; i += 1)
-		{
-			drw.line(center, Draw::Point(i, 0), col);
-			lcd.SetImg();
-		}
-		col.r = 0;
-		col.b = 0;
-		col.g = 255;
-
-		for (int i = 0; i < lcd.img_height; i += 1)
-		{
-			drw.line(center, Draw::Point(0, i), col);
-			lcd.SetImg();
-		}
-		*/
-		//uiCore.plot(make_pair(0, 0), col);
-		//uiCore.circle(center, 110, col);
-
-		uiCore.drawString(std::string("This is on the primary canvas."), col, make_pair(3, 15));
+		replaced.a = 0;
+		replaced.r = 0;
+		replaced.g = 0;
+		replaced.b = 255;
+		replacement.r = 0;
+		replacement.g = 255;
+		replacement.b = 0;
+		replacement.a = 255;
 		uiCore.drawCanvasBorder(col);
-		col.g = 0;
-		col.r = 0;
-		col.a = 255;
+		uiCore.floodFill(make_pair(200, 50), replaced, replacement);
+		
+		cont.setBackground(replaced);
+		cont.setForegound(replacement);
+		cont.redraw();
+		uiCore.drawSubCanvas(cont.canvas, cont.getLocation(), cont.getSize());
 		
 		
-		//fonts.circle(make_pair(100, 50), 30, col);
-		//fonts.line(make_pair(1, 1), make_pair(149, 199), col);
-		//fonts.line(make_pair(1, 199), make_pair(149, 1), col);
-		fonts.drawCanvasBorder(col);
-		fonts.drawString("Item", col, make_pair(30, 20));
-		//for (int i = 0; i != 10; i++)
-		//{
-		//	fonts.line(make_pair(0, 0), make_pair(i, 19), col);
-		//}
 		
-		uiCore.drawSubCanvas(&can, make_pair(5, 20), can.getSize());
-		uiCore.drawSubCanvas(&can, make_pair(5, 65), can.getSize());
-		uiCore.drawSubCanvas(&can, make_pair(5, 110), can.getSize());
-		uiCore.drawSubCanvas(&can, make_pair(5, 155), can.getSize());
-		col.g = 255;
-		col.r = 255;
 
 		lcd.setCanvas(uiCore.getCanvas()); //leaky...
 		lcd.SetImg();
