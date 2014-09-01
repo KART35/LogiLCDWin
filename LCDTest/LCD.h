@@ -1,4 +1,9 @@
 #pragma once
+#include "stdafx.h"
+#include <string>
+#include <ctime>
+#include <strstream>
+#include <fstream>
 #include <stdint.h>
 #include "stdafx.h"
 #define BYTE uint8_t
@@ -9,6 +14,7 @@
 #include <vector>
 
 #include "Canvas.h"
+#include "log.h"
 #define WIN32_LEAN_AND_MEAN
 using namespace std;
 
@@ -51,10 +57,7 @@ public:
 		if ((this->refreshCnt % 100000) == 0)
 		{
 			this->restart();
-			FILE* fp = NULL;
-			fopen_s(&fp, "err.txt", "w");
-			fputs("restarted LCD srv", fp);
-			fclose(fp);
+			logSys::putMessage("restarted lcd server", logSys::info, LOGINFO(0));
 			this->refreshCnt = 0;
 		}
 	}

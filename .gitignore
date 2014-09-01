@@ -25,3 +25,5 @@ doxy*
 *.opensdf
 Debug*
 Release*
+*.png
+*.txt

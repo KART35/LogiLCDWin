@@ -13,6 +13,9 @@ class Draw
 {
 
 	bool circlePts(Point, Point, Color);
+	
+public:
+	Canvas *canvas; //!< draw on this.
 	bool isValidCoord(Point location)
 	{
 		if (
@@ -23,9 +26,6 @@ class Draw
 			return false;
 		else return true;
 	}
-public:
-	Canvas *canvas; //!< draw on this.
-
 	Draw()
 	{
 		this->canvas = new Canvas;

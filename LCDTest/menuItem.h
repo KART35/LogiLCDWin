@@ -11,7 +11,6 @@ class menuItem :
 	Color fgColor;
 	pair<unsigned int, unsigned int> size;
 	pair<unsigned int, unsigned int> position;
-	bool isSelected = false;
 
 public:
 	menuItem();
@@ -22,12 +21,15 @@ public:
 		this->bgColor = bgc;
 		this->fgColor = fgc;
 		this->size = size;
+		this->canvas->setSize(size);
 	}
 
 	void setSize(std::pair<unsigned int, unsigned int> size)
 	{
 		this->size = size;
+		this->canvas->setSize(size);
 	}
+
 
 	void setPosition(std::pair<unsigned int, unsigned int> position)
 	{
@@ -38,11 +40,23 @@ public:
 	{
 		return this->fieldID;
 	}
-	void redraw()
+	void redraw(bool isSel)
 	{
-		this->drawCanvasBorder(fgColor);
-		this->floodFill(make_pair(3, 3), this->canvas->getPixel(make_pair(3, 3)), bgColor);
-		this->drawString(name, fgColor, make_pair(13, 3));
+
+		this->canvas->erase();
+		if (!isSel)
+		{
+			
+			this->drawCanvasBorder(fgColor);
+			this->floodFill(make_pair(3, 3), this->canvas->getPixel(make_pair(3, 3)), bgColor);
+			this->drawString(name, fgColor, make_pair(2, 12));
+		}
+		else
+		{
+			this->drawCanvasBorder(bgColor);
+			this->floodFill(make_pair(3, 3), this->canvas->getPixel(make_pair(3, 3)), fgColor);
+			this->drawString(name, bgColor, make_pair(2, 12));
+		}
 	}
 	void setBackground(Color col)
 	{

@@ -54,6 +54,15 @@
     <ClInclude Include="menuContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="scopeView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="audioHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -84,6 +93,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="menuContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="scopeView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="audioHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

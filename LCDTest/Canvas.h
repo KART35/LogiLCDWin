@@ -3,8 +3,10 @@
 #include <stdint.h>
 #include <utility>
 #include <vector>
+#include <algorithm>
+#include <utility>
 #include "common.h"
-
+#include "log.h"
 class Canvas 
 {
 	
@@ -72,6 +74,32 @@ public:
 	Color getPixel(Point location)
 	{
 		return this->page[getOffset(location)];
+	}
+
+	void erase()
+	{
+		for (std::vector<Color>::iterator  iter = this->page.begin(); iter != this->page.end(); iter++)
+		{
+			iter->a = 0;
+			iter->r = 0;
+			iter->g = 0;
+			iter->b = 0;
+		}
+	}
+
+	void shiftLeft()
+	{
+		std::rotate(this->page.begin(), this->page.begin() + 1, this->page.end());
+		for (int i = 0; i < this->getHeight()*this->getWidth(); i += this->getWidth())
+		{
+			for (int j = 1; j < 2; j++)
+			{
+				this->page[i + this->getWidth() - j].r = 0;
+				this->page[i + this->getWidth() - j].g = 0;
+				this->page[i + this->getWidth() - j].b = 0;
+			}
+		}
+		
 	}
 	
 };
