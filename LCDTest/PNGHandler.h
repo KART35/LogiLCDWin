@@ -23,7 +23,7 @@ class PNGHandler
 	int number_of_passes;
 	png_bytep row_pointer;
 public:
-	bool saveImage(char* file_name);
+	bool saveImage(char* file_name); //!< save the current screen as a PNG
 	PNGHandler(LogiLCD *);
 };
 
