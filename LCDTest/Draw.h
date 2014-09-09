@@ -8,10 +8,10 @@
 #include "common.h"
 using namespace std;
 
-
+//! basic drawing class. 
 class Draw 
 {
-
+	//! utility function used by circle()
 	bool circlePts(Point, Point, Color);
 	
 public:
