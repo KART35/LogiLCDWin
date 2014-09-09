@@ -14,8 +14,18 @@ public:
 	UICanvasCore()
 	{
 	}
-	bool drawSubCanvas(Canvas* , pair<unsigned int, unsigned int> location, pair<unsigned int, unsigned int> size); //!< draw a sub canvas onto the main canvas
-	Color blendPixel(Color fg, Color bg)//!<blend two RGBA pixels together
+	//! draw a sub canvas onto the main canvas
+	bool drawSubCanvas(
+		Canvas* , //!< pointer to the canvas that will be drawn on top of this->canvas. refered to as the source canvas
+		pair<unsigned int, unsigned int> location, //< where to put the source canvas.
+		pair<unsigned int, unsigned int> size //< size of the source canvs
+		); 
+
+	//! blend two RGBA pixels together
+	Color blendPixel(
+		Color fg, //<! foreground color
+		Color bg //!< background color
+		)
 	{
 		Color pixel;
 		memset(&pixel, 0, sizeof(Color));
