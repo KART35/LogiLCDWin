@@ -20,7 +20,7 @@ class Canvas
 	
 public:
 	//! image data stored in this
-	std::vector<Color> page; 
+	Color * page = NULL; 
 
 	//! set the canvas size. Takes an X Y dimension pair
 	void setSize(std::pair<unsigned int, unsigned int> size)
@@ -55,13 +55,18 @@ public:
 		unsigned int height = 240, //!< canvas height
 		unsigned int posX = 0, //!< canvas horizontal position
 		unsigned int posY = 0 //!< canvas vertical position
-		) :
-		page(height*width)
+		)
 	{
 		this->height = height;
 		this->width = width;
 		this->posX = posX;
 		this->posY = posY;
+		this->page = new Color[height*width];
+	}
+	
+	~Canvas()
+	{
+		delete[] page;
 	}
 	
 	//! return an X Y coord pair for the canvas location
@@ -77,7 +82,7 @@ public:
 	}
 	
 	//! return a pointer to the canvas
-	std::vector<Color> *getCanvas()
+	Color *getCanvas()
 	{
 		return &this->page;
 	}
@@ -102,29 +107,14 @@ public:
 	//! clear out the entire canvas. 
 	void erase()
 	{
-		for (std::vector<Color>::iterator  iter = this->page.begin(); iter != this->page.end(); iter++)
-		{
-			iter->a = 0;
-			iter->r = 0;
-			iter->g = 0;
-			iter->b = 0;
-		}
+		memset(this->page, 0, sizeof(Color) * this->height * this->width);
 	}
 
 	//! shift the entire image one pixel to the left
+	// this might actually be shiftDown now. that or segfault.
 	void shiftLeft()
 	{
-		std::rotate(this->page.begin(), this->page.begin() + 1, this->page.end());
-		for (int i = 0; i < this->getHeight()*this->getWidth(); i += this->getWidth())
-		{
-			for (int j = 1; j < 2; j++)
-			{
-				this->page[i + this->getWidth() - j].r = 0;
-				this->page[i + this->getWidth() - j].g = 0;
-				this->page[i + this->getWidth() - j].b = 0;
-			}
-		}
-		
+		memmove(this->page+this->width, this->page, sizeof(Color)*width);
 	}
 	
 };
