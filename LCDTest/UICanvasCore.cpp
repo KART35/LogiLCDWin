@@ -18,7 +18,7 @@ bool UICanvasCore::drawSubCanvas(Canvas* sCanvas, pair<unsigned int, unsigned in
 			x = 0;
 		}
 		offset = x + y * this->canvas->getWidth();
-		if ((offset + offsetSec) >= (this->canvas->page.size())) continue;
+		if ((offset + offsetSec) >= (this->canvas->getPixCount())) continue;
 		
 		if (sCanvas->page[j].a != 0)
 		{

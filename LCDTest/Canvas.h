@@ -27,7 +27,7 @@ public:
 	{
 		this->height = size.second;
 		this->width = size.first;
-		this->page.resize(this->height * this->width);
+		
 	}
 
 	//! set the canvas position. Takes an X Y coord pair.
@@ -81,10 +81,15 @@ public:
 		return std::make_pair(this->height, this->width);
 	}
 	
+	unsigned int getPixCount()
+	{
+		return this->height * this->width;
+	}
+
 	//! return a pointer to the canvas
 	Color *getCanvas()
 	{
-		return &this->page;
+		return this->page;
 	}
 
 	//! utility function to calculate the offest for an X Y coord pair.

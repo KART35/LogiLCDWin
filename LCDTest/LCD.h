@@ -54,12 +54,13 @@ public:
 	void setCanvas(Canvas* can)
 	{
 		this->canvas = can;
-		if ((this->refreshCnt % 100000) == 0)
+	/*	if ((this->refreshCnt % 100000) == 0)
 		{
 			this->restart();
 			logSys::putMessage("restarted lcd server", logSys::info, LOGINFO(0));
 			this->refreshCnt = 0;
-		}
+			
+		}*/
 	}
 	LogiLCD();
 	void SetImg();

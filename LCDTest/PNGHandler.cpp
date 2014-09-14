@@ -16,7 +16,7 @@ bool PNGHandler::saveImage(char* file_name)
 	x = 0;
 	y = 0;
 	FILE *fp = NULL;
-	fopen_s( &fp, file_name, "wb");
+	fp = fopen( file_name, "wb");
 	if (!fp)
 		return false;
 	png_ptr = png_create_write_struct

@@ -18,12 +18,13 @@ struct audPacket
 	//int16_t lb = 0;
 	//int16_t ra = 0;
 	//int16_t rb = 0;
-	int32_t l = 0;
-	int32_t r = 0;
+	double l = 0;
+	double r = 0;
 };
 std::atomic<std::queue<audPacket> > data;
 std::atomic<bool> die = false;
 std::atomic<size_t> samp_size = 0;
+audPacket bufferPack;
 bool workerDead = false;
 
 int audioTaskWorker()
@@ -86,7 +87,8 @@ int audioTaskWorker()
 		audClient->Release();
 		return hr;
 	}
-
+	logSys::putMessage("wfx->wFormatTag = ", logSys::info, LOGINFO(wfx->wFormatTag));
+	//bInt16 = true;
 	if (bInt16) {
 		// coerce int-16 wave format
 		// can do this in-place since we're not changing the size of the format
@@ -97,6 +99,7 @@ int audioTaskWorker()
 			wfx->wBitsPerSample = 16;
 			wfx->nBlockAlign = wfx->nChannels * wfx->wBitsPerSample / 8;
 			wfx->nAvgBytesPerSec = wfx->nBlockAlign * wfx->nSamplesPerSec;
+			logSys::putMessage("Audio format: IEEE float", logSys::info, LOGINFO(wfx->wFormatTag));
 			break;
 
 		case WAVE_FORMAT_EXTENSIBLE:
@@ -109,6 +112,7 @@ int audioTaskWorker()
 										   wfx->wBitsPerSample = 16;
 										   wfx->nBlockAlign = wfx->nChannels * wfx->wBitsPerSample / 8;
 										   wfx->nAvgBytesPerSec = wfx->nBlockAlign * wfx->nSamplesPerSec;
+										   logSys::putMessage("Audio format: IEEE float", logSys::info, LOGINFO(wfx->wFormatTag));
 									   }
 									   else {
 										   logSys::putMessage("Don't know how to coerce mix format to int-16", logSys::error, LOGINFO(hr));
@@ -209,6 +213,7 @@ int audioTaskWorker()
 
 	bool bDone = false;
 	bool bFirstPacket = true;
+	int loopCnt = 0;
 	while (!(bDone || die.load())) // run untill finished, or kill signal.
 	{
 		for (UINT32 nPasses = 0; !bDone; nPasses++) {
@@ -315,8 +320,18 @@ int audioTaskWorker()
 			}
 
 
-			audPacket *pak = (audPacket*)(void*)pData;
-			data._My_val.push(*pak);
+			
+			audPacket * pak = (audPacket*)(void*)pData;
+			bufferPack.l += pak->l;
+			bufferPack.r += pak->r;
+			if (loopCnt > 3)
+			{
+				bufferPack.l = bufferPack.l / 3;
+				bufferPack.r = bufferPack.r / 3;
+				data._My_val.push(bufferPack);
+				loopCnt = 0;
+			}
+			loopCnt++;
 			/*
 			LONG lBytesToWrite = nNumFramesToRead * blkAlign;
 

@@ -43,11 +43,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	replacement.b = 255;
 	replacement.a = 255;
 	col.a = 255;
-	scopeView s(replacement);
+	//scopeView s(replacement);
 	Canvas can(150, 40);
 	FontBase fonts(&can);
-	/*
-	//menuContainer cont;
+	
+	menuContainer cont;
 	cont.setSize(make_pair(75, 237));
 	cont.setPosition(make_pair(3, 1));
 	cont.setBackground(replaced);
@@ -63,7 +63,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	cont.addEntry("nine");
 	cont.addEntry("ten");
 	cont.addEntry("eleven");
-	cont.addEntry("twelve");*/
+	cont.addEntry("twelve");
 	while (
 		LogiLcdIsConnected(LOGI_LCD_TYPE_COLOR) && 
 		(!LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_CANCEL))
@@ -97,8 +97,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	//		lcd.SetImg();
 	//		
 	//	}
-		s.refresh();
-		lcd.setCanvas(s.getCanvas()); //leaky...
+		//s.refresh();
+		lcd.setCanvas(cont.getCanvas()); //leaky...
 		lcd.SetImg();
 		if (LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_OK))
 		{
