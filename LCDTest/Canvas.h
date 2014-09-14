@@ -125,7 +125,7 @@ public:
 	
 	void shiftLeft()
 	{
-		for (int i = this->height; i > 0; i--) memmove(this->page + (this->width*i), this->page + (1 + (this->width * i)), sizeof(Color)*width);
+		for (int i = this->height; i > 1; i--) memmove(this->page + (this->width*i), this->page + (1 + (this->width * i)), sizeof(Color)*width);
 	}
 
 };
