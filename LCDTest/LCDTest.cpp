@@ -93,6 +93,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		{
 			uiCore.plot(make_pair(160 + (15.0*cos(4.0 * i * 0.02617993877991494365385536152733)), 4), col);
 			uiCore.canvas->shiftDown();
+			uiCore.canvas->shiftLeft();
 			lcd.setCanvas(uiCore.getCanvas()); //leaky...
 			lcd.SetImg();
 			

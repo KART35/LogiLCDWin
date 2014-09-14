@@ -123,6 +123,11 @@ public:
 		//this->page = this->page >> (sizeof(Color)*width);
 	}
 	
+	void shiftLeft()
+	{
+		for (int i = this->height; i > 0; i--) memmove(this->page + (this->width*i), this->page + (1 + (this->width * i)), sizeof(Color)*width);
+	}
+
 };
 
 
