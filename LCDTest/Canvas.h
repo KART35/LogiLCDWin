@@ -115,11 +115,12 @@ public:
 		memset(this->page, 0, sizeof(Color) * this->height * this->width);
 	}
 
-	//! shift the entire image one pixel to the left
+	//! shift the entire image one pixel down
 	// this might actually be shiftDown now. that or segfault.
-	void shiftLeft()
+	void shiftDown()
 	{
-		memmove(this->page+this->width, this->page, sizeof(Color)*width);
+		for (int i = this->height; i > 0; i--) memmove(this->page + (this->width * (i + 1)), this->page + (this->width * i), sizeof(Color)*width);
+		//this->page = this->page >> (sizeof(Color)*width);
 	}
 	
 };

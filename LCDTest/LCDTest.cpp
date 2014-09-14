@@ -25,7 +25,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	logSys::putMessage("Startup", logSys::info, LOGINFO(0));
 	LogiLCD lcd;
 
-	//scopeView s(col);
 	
 	PNGHandler png(&lcd);
 	
@@ -43,7 +42,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 	replacement.b = 255;
 	replacement.a = 255;
 	col.a = 255;
-	//scopeView s(replacement);
 	Canvas can(150, 40);
 	FontBase fonts(&can);
 	
@@ -88,18 +86,19 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE, PWSTR pCmdLine, int nCmdShow
 		cont.redraw();
 		uiCore.drawSubCanvas(cont.canvas, cont.getLocation(), cont.getSize());
 		*/
-
-		//uiCore.circle(make_pair(50, 50), 25, col);
-		//for (int i = 0; i < lcd.getWidth(); i++)
-	//	{
-	//		uiCore.canvas->shiftLeft();
-	//		lcd.setCanvas(uiCore.getCanvas()); //leaky...
-	//		lcd.SetImg();
-	//		
-	//	}
-		//s.refresh();
-		lcd.setCanvas(cont.getCanvas()); //leaky...
+		lcd.setCanvas(uiCore.getCanvas()); //leaky...
 		lcd.SetImg();
+		//uiCore.circle(make_pair(50, 50), 25, col);
+		for (float i = 0; i < lcd.getHeight(); i++)
+		{
+			uiCore.plot(make_pair(160 + (15.0*cos(4.0 * i * 0.02617993877991494365385536152733)), 4), col);
+			uiCore.canvas->shiftDown();
+			lcd.setCanvas(uiCore.getCanvas()); //leaky...
+			lcd.SetImg();
+			
+		}
+		//lcd.setCanvas(uiCore.getCanvas()); //leaky...
+		//lcd.SetImg();
 		if (LogiLcdIsButtonPressed(LOGI_LCD_COLOR_BUTTON_OK))
 		{
 			png.saveImage("test.png");
